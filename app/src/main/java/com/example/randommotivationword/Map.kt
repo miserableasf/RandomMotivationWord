@@ -29,4 +29,31 @@ class Map {
         25 to "What you get by achieving your goals is not as important as what you become by achieving your goals.",
         26 to "You are the best!"
     )
+    public val swearPhrases = mapOf(
+        1 to "You're a waste of space.",
+        2 to "I've seen smarter people while watching paint dry.",
+        3 to "Your existence is an insult to humanity.",
+        4 to "You're as useful as a screen door on a submarine.",
+        5 to "You're not pretty enough to be this stupid.",
+        6 to "Has anyone ever told you that you're a waste of oxygen?",
+        7 to "You're the reason God created the middle finger.",
+        8 to "You're about as useful as a knitted condom.",
+        9 to "If brains were dynamite, you wouldn't have enough to blow your nose.",
+        10 to "You're not the dumbest person in the world, but you better hope they don't die.",
+        11 to "You're not yourself today. I noticed the improvement immediately.",
+        12 to "You're a shining example of why the gene pool needs a lifeguard.",
+        13 to "You're not the full quid, are you?",
+        14 to "You're nothing but a sad, strange little man.",
+        15 to "I'd agree with you, but then we'd both be wrong.",
+        16 to "Your family tree must be a cactus because everyone on it is a prick.",
+        17 to "You're not just a clown. You're the entire circus.",
+        18 to "You're as bright as a black hole.",
+        19 to "If ignorance is bliss, you must be the happiest person on this planet.",
+        20 to "You're not the sharpest tool in the shed, are you?",
+        21 to "You're like a hemorrhoid, a pain the a** that won't go away.",
+        22 to "You're not the brightest crayon in the box.",
+        23 to "You're like a Monday, nobody likes you.",
+        24 to "You're as pleasant as a root canal.",
+        25 to "You're a prime example of the limitations of human intelligence."
+    )
 }

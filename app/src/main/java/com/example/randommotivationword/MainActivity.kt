@@ -1,5 +1,7 @@
 package com.example.randommotivationword
 
+import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
@@ -7,37 +9,48 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.randommotivationword.databinding.ActivityMainBinding
 import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     lateinit var activity: MainActivity
     private lateinit var binding: ActivityMainBinding
+    private var state: Boolean = true
+//    TODO: отображение текста на кнопке, надо поменять шрифт и перенос у шрифта
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var lastClickTime: Long = 0
-        var state: Boolean = true
+        val map = Map()
+        var texto = map.motivationalPhrases
+        val mapo = map.motivationalPhrases
+        val swearMapo = map.swearPhrases
+
+        binding.swearmode.setOnCheckedChangeListener { _, isChecked ->
+            val message = if (isChecked) "Swear mod ON" else "Swear mod OFF"
+            Toast.makeText(
+                this@MainActivity, message,
+                Toast.LENGTH_SHORT
+            ).show()
+
+            if (isChecked) {
+                texto = swearMapo
+            } else {
+                texto = mapo
+            }
+        }
 
         binding.button.setOnClickListener(object : View.OnClickListener {
             private var lastClickTime: Long = 0
-
             override fun onClick(v: View) {
-                val map = Map()
-                val mapo = map.motivationalPhrases
-
-                var rand = Random.nextInt(1, mapo.size)
-
-                var texto = mapo[rand]
-                binding.button.text = texto
-
+                val rand = Random.nextInt(1, 25)
                 if (SystemClock.elapsedRealtime() - lastClickTime < 200) {
-                    binding.button.parent as LinearLayout
+                    val layout = binding.button.parent as LinearLayout
                     val buttonLayoutParams = binding.button.layoutParams as LinearLayout.LayoutParams
-                    val switchLayoutParams = binding.darkMode.layoutParams as LinearLayout.LayoutParams
+                    val switchLayoutParams = binding.swearmode.layoutParams as LinearLayout.LayoutParams
 
                     if (state) {
                         buttonLayoutParams.weight = 2f
@@ -48,30 +61,23 @@ class MainActivity : ComponentActivity() {
                     }
 
                     binding.button.layoutParams = buttonLayoutParams
-                    binding.darkMode.layoutParams = switchLayoutParams
+                    binding.swearmode.layoutParams = switchLayoutParams
                     state = !state
                 }
                 lastClickTime = SystemClock.elapsedRealtime()
-//                TODO: dark theme, and make on swipe this menu.
+                binding.button.text = texto[rand]
             }
         })
 
-        binding.darkMode.setOnCheckedChangeListener { _, isChecked ->
-            val message = if (isChecked) "Dark mod ON" else "Dark mod OFF"
-            Toast.makeText(
-                this@MainActivity, message,
-                Toast.LENGTH_SHORT
-            ).show()
-
-            if (isChecked) {
-                binding.button.setBackgroundColor(Color.BLACK)
-                binding.button.setTextColor(Color.WHITE)
-            } else {
-                binding.button.setBackgroundColor(Color.WHITE)
-                binding.button.setTextColor(Color.BLACK)
+            fun isDarkThemeEnabled(context: Context): Boolean {
+                return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_NO
             }
+            if (isDarkThemeEnabled(applicationContext)) {
+                    binding.button.setBackgroundColor(Color.WHITE)
+                    binding.button.setTextColor(Color.BLACK)
+                } else {
+                    binding.button.setBackgroundColor(Color.BLACK)
+                    binding.button.setTextColor(Color.WHITE)
+                }
         }
     }
-//    TODO: сделать темный режим под стать настройкам, и так-же сделать стилизацию что-бы свитч дарк-мода не прыгал постоянно от текста к тексту.
-//    FIXME: исправить баг связанный с переключением назад в светлую тему(хотя хуй его что с ним не так) П.С: при большом тексте нельзя нормально переключить режим(через раз работает аааа)
-}

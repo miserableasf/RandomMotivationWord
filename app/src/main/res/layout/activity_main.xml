@@ -11,12 +11,14 @@
         android:layout_weight="0"
         android:fontFamily="sans-serif-condensed"
         android:text="Click!"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:background="@color/white"/>
 
     <Switch
-        android:id="@+id/darkMode"
+        android:id="@+id/swearmode"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="2"
-        android:text="Dark Mode" />
+        android:text="Swear Mode" />
+
 </LinearLayout>
